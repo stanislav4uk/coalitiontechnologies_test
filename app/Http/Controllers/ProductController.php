@@ -74,11 +74,12 @@ class ProductController extends Controller
     }
 
 
-    public function edit(Request $request)
+    public function edit($product_id, Request $request)
     {
-        dd($request->all());
+        $product = $this->products->find($product_id);
+
         return view('product.edit', [
-//            "product"  => $product,
+            "product"  => $product,
         ]);
     }
 
@@ -87,8 +88,9 @@ class ProductController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function update(Product $product, Request $request)
+    public function update(Request $request)
     {
+        $product = $this->products->find($request->get("id"));
         $product->name = $request->get("name");
         $product->quantity = $request->get("quantity");
         $product->price = $request->get("price");
@@ -96,7 +98,8 @@ class ProductController extends Controller
         $this->manager->save($product);
 
         return new JsonResponse([
-            "status" => 1
+            "status" => 1,
+            "route" => route('products.content'),
         ]);
     }
 }

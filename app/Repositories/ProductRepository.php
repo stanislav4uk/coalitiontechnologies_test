@@ -46,6 +46,7 @@ class ProductRepository
         foreach ($this->storage->all() as $item) {
             $product = new Product($item);
             $product->setAttribute($product->getKeyName(), $item[$product->getKeyName()]);
+            $product->setCreatedAt($item["created_at"]);
             $collection->put($product->getKey(), $product);
         }
 

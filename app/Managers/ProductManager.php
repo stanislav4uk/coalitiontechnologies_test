@@ -30,7 +30,11 @@ class ProductManager
      */
     public function save(Product $product)
     {
-        $result = $this->storage->save($product->getAttributes());
+        if (!$product->getKey()) {
+            $product->setCreatedAt($product->freshTimestamp());
+        }
+
+        $result = $this->storage->save($product->toArray());
 
         // Set ID for the product
         $product->setAttribute($product->getKeyName(), $result);
