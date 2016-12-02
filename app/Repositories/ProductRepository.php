@@ -26,6 +26,15 @@ class ProductRepository
     }
 
     /**
+     * @param $id
+     * @return Product
+     */
+    public function find($id)
+    {
+        return $this->all()->get($id);
+    }
+
+    /**
      * Returns all products created before
      *
      * @return Collection

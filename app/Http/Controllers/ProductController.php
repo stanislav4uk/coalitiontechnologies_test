@@ -39,7 +39,20 @@ class ProductController extends Controller
     public function index()
     {
         $products = $this->products->all();
+
         return view('product.index', [
+            'products' => $products
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function table()
+    {
+        $products = $this->products->all();
+
+        return view('product.content', [
             'products' => $products
         ]);
     }
@@ -55,7 +68,17 @@ class ProductController extends Controller
         $this->manager->save($product);
 
         return new JsonResponse([
-            "status" => 1
+            "status" => 1,
+            "route" => route('products.content'),
+        ]);
+    }
+
+
+    public function edit(Request $request)
+    {
+        dd($request->all());
+        return view('product.edit', [
+//            "product"  => $product,
         ]);
     }
 
